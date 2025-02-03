@@ -16,7 +16,7 @@ wss.on('connection', (socket) => {
                 room: parsedMsg.payload.roomId
             });
         } else if (parsedMsg.type === 'chat') {
-            const room = allUsers.find(x => x.socket === socket);
+            const room = allUsers.find(x => x.socket === socket)?.room;
             if (!room) {
                 return;             
                 // if this user had ever send a request to join the server, it should be present in the array, find it and get the roomId
