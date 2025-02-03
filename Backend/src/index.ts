@@ -5,8 +5,14 @@ interface User {
     room: string;
 }
 const allUsers: User[] = [];
+allUsers.length = 0;
+
+let userCount = 0;
 
 wss.on('connection', (socket) => {
+    userCount++;
+    console.log(`Client connected #${userCount}`);
+    
     socket.on('message', (msg: string) => {
         const parsedMsg = JSON.parse(msg);
 
