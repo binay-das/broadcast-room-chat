@@ -15,6 +15,7 @@ wss.on('connection', (socket) => {
     
     socket.on('message', (msg: string) => {
         const parsedMsg = JSON.parse(msg);
+        console.log(parsedMsg);
 
         if (parsedMsg.type === 'join') {
             allUsers.push({
