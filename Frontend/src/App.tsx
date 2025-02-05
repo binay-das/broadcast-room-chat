@@ -16,7 +16,7 @@ function App() {
 
     socket?.send(JSON.stringify({ type: "join", payload: { roomId } }));
     setUserRoom(roomId);
-    setIsInRoom(true)
+    setIsInRoom(true);
   };
 
   const sendMsg = () => {
@@ -24,7 +24,8 @@ function App() {
     if (!msg || !userRoom) return;
 
     socket?.send(
-      JSON.stringify({ type: "chat", payload: { msg, room: userRoom } })
+      // JSON.stringify({ type: "chat", payload: { msg, room: userRoom } })
+      JSON.stringify({ type: "chat", payload: { message: msg } })
     );
 
     if (msgRef.current.value) {
