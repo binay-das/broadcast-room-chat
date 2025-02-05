@@ -14,7 +14,7 @@ wss.on('connection', (socket) => {
     console.log(`Client connected #${userCount}`);
     
     socket.on('message', (msg: string) => {
-        const parsedMsg = JSON.parse(msg);
+        const parsedMsg = JSON.parse(msg.toString());
         console.log(parsedMsg);
 
         if (parsedMsg.type === 'join') {
