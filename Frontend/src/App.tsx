@@ -39,10 +39,25 @@ function App() {
     setSocket(socket);
   };
 
+  const disconnectFromServer = () => {
+    console.log("Disconnected from server");
+    socket?.close();
+    setSocket(null);
+    setIsInRoom(false); 
+    setUserRoom(null);
+  };
+
   useEffect(() => {
     if (socket) {
       socket.onmessage = (ev) => {
         setMessages((prev) => [...prev, ev.data]);
+      };
+
+      socket.onclose = () => {
+        console.log("Disconnected from server");
+        setSocket(null);
+        setIsInRoom(false); 
+        setUserRoom(null);
       };
     }
   }, [socket]);
@@ -50,7 +65,10 @@ function App() {
   return (
     <div className="w-full h-screen bg-black text-white">
       <div className="flex flex-col gap-2 items-center absolute top-4 right-4">
-        <button className="border rounded px-4 py-2" onClick={connectToServer}>
+        <button
+          className="border rounded px-4 py-2"
+          onClick={socket ? disconnectFromServer : connectToServer}
+        >
           {socket ? "Disconnect" : "Connect"}
         </button>
         <span>{socket ? "Connected" : "Disconnected"}</span>
