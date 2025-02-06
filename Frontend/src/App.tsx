@@ -19,6 +19,18 @@ function App() {
     setIsInRoom(true);
   };
 
+  const createRoom = () => {
+    const items = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let roomId = '';
+    for (let i = 0; i < 6; i++) {
+      roomId += items.charAt(Math.floor(Math.random() * items.length));
+    }
+    socket?.send(JSON.stringify({ type: "join", payload: { roomId } }));
+    setUserRoom(roomId);
+    setIsInRoom(true);
+
+  }
+
   const sendMsg = () => {
     const msg = msgRef.current?.value;
     if (!msg || !userRoom) return;
@@ -63,7 +75,7 @@ function App() {
   }, [socket]);
 
   return (
-    <div className="w-full h-screen bg-black text-white">
+    <div className="w-full h-screen bg-black text-white flex flex-col justify-center items-center">
       <div className="flex flex-col gap-2 items-center absolute top-4 right-4">
         <button
           className="border rounded px-4 py-2"
@@ -74,14 +86,14 @@ function App() {
         <span>{socket ? "Connected" : "Disconnected"}</span>
       </div>
       <div>
+        <input type="text" placeholder="Enter room id" ref={joinRoomRef} className="border px-4 py-2 rounded mr-2 mb-4"/>
+        <button onClick={joinRoom} className="border rounded mr-2 p-2">JOIN ROOM</button>
+        <button onClick={createRoom} className="border rounded mr-2 p-2">CREATE ROOM</button>
+      </div>
+      <div className="border w-1/2 mx-auto h-3/4 ">
         {messages.map((msg, index) => (
           <div key={index}>{msg}</div>
         ))}
-      </div>
-      <div>
-        <h1>JOIN a ROOM</h1>
-        <input type="text" placeholder="Enter room id" ref={joinRoomRef} />
-        <button onClick={joinRoom}>JOIN ROOM</button>
       </div>
       {isInRoom && (
         <div>
