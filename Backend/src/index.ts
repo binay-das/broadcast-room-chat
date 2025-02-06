@@ -38,4 +38,13 @@ wss.on('connection', (socket) => {
             });
         }
     });
+
+    socket.on('close', () => {
+        userCount--;
+        console.log(`Client disconnected`);
+        const disconnectedIndex = allUsers.findIndex(x => x.socket === socket);
+        if (disconnectedIndex !== -1) {
+            allUsers.splice(disconnectedIndex, 1);
+        } 
+    });
 });
