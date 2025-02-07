@@ -26,6 +26,9 @@ function App() {
     for (let i = 0; i < 6; i++) {
       roomId += items.charAt(Math.floor(Math.random() * items.length));
     }
+    if (joinRoomRef.current) {
+      joinRoomRef.current.value = roomId;
+    }
     socket?.send(JSON.stringify({ type: "join", payload: { roomId } }));
     setUserRoom(roomId);
     setIsInRoom(true);
