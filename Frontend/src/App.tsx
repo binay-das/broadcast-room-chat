@@ -43,15 +43,17 @@ function App() {
       JSON.stringify({ type: "chat", payload: { message: msg } })
     );
 
-    if (msgRef.current.value) {
+    if (msgRef.current) {
       msgRef.current.value = "";
     }
   };
 
   const connectToServer = () => {
     const socket = new WebSocket("ws://localhost:3000");
-    socket.onopen = () => console.log("Connected to server");
-    setSocket(socket);
+    socket.onopen = () => {
+      console.log("Connected to server");
+      setSocket(socket);
+    };
   };
 
   const disconnectFromServer = () => {
@@ -90,24 +92,24 @@ function App() {
           {socket ? "Connected" : "Disconnected"}
         </span>
       </div>
-      <div className="flex gap-2 mb-4 lg:flex-col lg:gap-2 lg:w-1/6">
+      <div className="flex gap-2 mb-4 lg:flex-col lg:gap-2 lg:w-1/6 border">
         <input
           type="text"
           placeholder="Enter room id"
           ref={joinRoomRef}
-          className="border px-4 py-2 rounded mr-2 bg-gray-700 focus:ring focus:ring-blue-500"
+          className="border px-4 py-2 rounded mr-2 bg-gray-700 focus:ring focus:ring-blue-500 lg:w-full"
         />
         <button
           onClick={joinRoom}
           className="border px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition"
         >
-          JOIN ROOM
+          Join Room
         </button>
         <button
           onClick={createRoom}
           className="border px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 transition"
         >
-          CREATE ROOM
+          Create Room
         </button>
       </div>
       <div className="border w-full max-w-2xl h-80 overflow-y-auto bg-gray-800 rounded-lg p-4">
@@ -117,8 +119,7 @@ function App() {
           </div>
         ))}
       </div>
-      {isInRoom && (
-        <div className="mt-4 lg:flex flex-col lg:gap-4 lg:w-1/5 lg:mt-0 ">
+        <div className={`mt-4 lg:flex flex-col lg:gap-4 lg:w-1/5 lg:mt-0 border ${!isInRoom && `invisible` }`}>
           <input
             type="text"
             placeholder="Enter msg"
@@ -129,10 +130,9 @@ function App() {
             onClick={sendMsg}
             className="border px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 transition"
           >
-            SEND MSG
+            Send Message
           </button>
         </div>
-      )}
     </div>
   );
 }
