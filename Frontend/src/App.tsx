@@ -78,8 +78,8 @@ function App() {
   }, [socket]);
 
   return (
-    <div className="w-full h-screen bg-gray-900 text-white flex flex-col justify-center items-center">
-      <div className="flex flex-col gap-2 items-center absolute top-4 right-4">
+    <div className="w-full h-screen bg-gray-900 text-white flex flex-col lg:flex-row lg:gap-4 justify-center items-center">
+      <div className="flex flex-col gap-1 items-center absolute top-4 right-4">
         <button
           className={`border rounded px-4 py-2 cursor-pointer`}
           onClick={socket ? disconnectFromServer : connectToServer}
@@ -90,7 +90,7 @@ function App() {
           {socket ? "Connected" : "Disconnected"}
         </span>
       </div>
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 lg:flex-col lg:gap-2 lg:w-1/6">
         <input
           type="text"
           placeholder="Enter room id"
@@ -118,7 +118,7 @@ function App() {
         ))}
       </div>
       {isInRoom && (
-        <div className="mt-4">
+        <div className="mt-4 lg:flex flex-col lg:gap-4 lg:w-1/5 lg:mt-0 ">
           <input
             type="text"
             placeholder="Enter msg"
