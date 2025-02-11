@@ -122,7 +122,7 @@ function App() {
       </div>
       <div className="border w-full max-w-2xl h-8/10 lg:h-9/10 overflow-y-auto bg-gray-800 rounded-lg p-4">
         {messages.map((msg, index) => (
-          <div key={index} className={`${msg.isUser ? "bg-blue-500 ml-auto" : "bg-gray-700 mr-auto"} p-2 rounded-md mb-2`}>
+          <div key={index} className={`${msg.isUser ? "bg-blue-500 ml-auto" : "bg-gray-700 mr-auto"} max-w-sm p-2 rounded-md mb-2`}>
             {msg.msg}
           </div>
         ))}
