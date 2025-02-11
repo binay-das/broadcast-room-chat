@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 function App() {
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<{
+    msg: string,
+    isUser: boolean
+  }[]>([]);
   const [userRoom, setUserRoom] = useState<string | null>(null);
 
   const [isInRoom, setIsInRoom] = useState<boolean>(false);
@@ -43,6 +46,11 @@ function App() {
       JSON.stringify({ type: "chat", payload: { message: msg } })
     );
 
+    setMessages((prev) => [...prev, {
+      msg,
+      isUser: true
+    }]);
+
     if (msgRef.current) {
       msgRef.current.value = "";
     }
@@ -67,7 +75,7 @@ function App() {
   useEffect(() => {
     if (socket) {
       socket.onmessage = (ev) => {
-        setMessages((prev) => [...prev, ev.data]);
+        setMessages((prev) => [...prev, {msg: ev.data, isUser: false}]);
       };
 
       socket.onclose = () => {
@@ -112,10 +120,10 @@ function App() {
           Create Room
         </button>
       </div>
-      <div className="border w-full max-w-2xl h-80 overflow-y-auto bg-gray-800 rounded-lg p-4">
+      <div className="border w-full max-w-2xl h-8/10 lg:h-9/10 overflow-y-auto bg-gray-800 rounded-lg p-4">
         {messages.map((msg, index) => (
           <div key={index} className="bg-gray-700 p-2 rounded-md mb-2">
-            {msg}
+            {msg.msg}
           </div>
         ))}
       </div>

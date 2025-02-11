@@ -32,9 +32,9 @@ wss.on('connection', (socket) => {
             const targetedUsers = allUsers.filter(x => x.room === room);
 
             targetedUsers.forEach(targetedUser => {
-                if (targetedUser.socket !== socket) {
+                // if (targetedUser.socket !== socket) {
                     targetedUser.socket.send(parsedMsg.payload.message)
-                }
+                // }
             });
         }
     });
